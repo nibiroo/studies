@@ -5,10 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+// ANNOTATIONS
 // @Configurantion -> Means that the mentioned class is a configuration
-//  @Profiles("nameprofile") -> Means that the mentioned configuration is for a specific profile
-@Configuration
-@Profile("development")
+// @Profiles("nameprofile") -> Means that the mentioned configuration is for a specific profile
+// @Development -> Annotation
+//@Configuration
+//@Profile("development")
+@Development
 public class MyConfiguration {
 
     // For each configuration, it's used @Bean annotation
@@ -18,7 +21,7 @@ public class MyConfiguration {
     }
 
     // CommandLineRunner -> When the build application happens, SpringBoot will find all @Bean annotations that are CommandLineRunner, compiling code within args
-    @Bean
+    @Bean(name = "executeConfigForProfile")
     public CommandLineRunner executeConfigForProfile(){
         return args -> {
             System.out.println("RUNNING DEVELOPMENT CONFIGURANTION!");
