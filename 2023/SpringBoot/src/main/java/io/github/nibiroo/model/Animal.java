@@ -1,4 +1,4 @@
-package io.github.nibiroo;
+package io.github.nibiroo.model;
 
 public interface Animal {
     void makeNoise();

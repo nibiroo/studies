@@ -1,6 +1,7 @@
 package io.github.nibiroo;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import io.github.nibiroo.model.Animal;
+import io.github.nibiroo.model.Dog;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -1,9 +1,8 @@
 package io.github.nibiroo;
 
+import io.github.nibiroo.model.Development;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 // ANNOTATIONS
 // @Configurantion -> Means that the mentioned class is a configuration

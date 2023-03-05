@@ -1,4 +1,4 @@
-package io.github.nibiroo;
+package io.github.nibiroo.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Autowired
-@Qualifier("cat")
-public @interface Cat {
+@Qualifier("dog")
+public @interface Dog {
 }
