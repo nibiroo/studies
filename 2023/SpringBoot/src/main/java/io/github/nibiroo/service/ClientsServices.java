@@ -1,7 +1,7 @@
 package io.github.nibiroo.service;
 
-import io.github.nibiroo.model.Client;
 import io.github.nibiroo.repository.ClientsRepository;
+import io.github.nibiroo.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,6 @@ public class ClientsServices {
     public ClientsRepository getRepository() {
         return clientRepository;
     }
-
     public void setRepository(ClientsRepository repository) {
         this.clientRepository = repository;
     }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Component
 public class ClientsRepository {
+    // persist will insert data into the database
     public void persist(Client client) {
         // Connect the database and save the client
     }
