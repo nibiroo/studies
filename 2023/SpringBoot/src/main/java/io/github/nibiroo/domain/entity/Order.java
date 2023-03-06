@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Order {
     private Integer id;
-    private Client client;
+    private Customer customer;
     private LocalDate date;
     private BigDecimal total;
 
@@ -15,11 +15,11 @@ public class Order {
     public void setId(Integer id) {
         this.id = id;
     }
-    public Client getClient() {
-        return client;
+    public Customer getClient() {
+        return customer;
     }
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(Customer customer) {
+        this.customer = customer;
     }
     public LocalDate getDate() {
         return date;
