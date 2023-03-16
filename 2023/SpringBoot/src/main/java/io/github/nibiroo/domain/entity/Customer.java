@@ -1,34 +1,38 @@
 package io.github.nibiroo.domain.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "customer")
 public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "name", length = 100)
     private String name;
 
     public Customer() {
     }
-    public Customer(String name){
-        this.name = name;
+    public Customer(String nameCustomer){
+        this.name = nameCustomer;
     }
-    public Customer(Integer id, String name) {
-        this.id = id;
-        this.name = name;
+    public Customer(Integer idCustomer, String nameCustomer) {
+        this.id = idCustomer;
+        this.name = nameCustomer;
     }
 
     // GETTERS & SETTERS - ALT + INS
     public Integer getId() {
         return id;
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
+    public String getName() {
         return name;
     }
-
-    public void setNome(String nome) {
-        this.name = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

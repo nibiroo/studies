@@ -2,7 +2,7 @@ package io.github.nibiroo;
 
 
 import io.github.nibiroo.domain.entity.Customer;
-import io.github.nibiroo.domain.repository.Customers;
+import io.github.nibiroo.domain.repository.CustomersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,31 +19,31 @@ import java.util.List;
 @RestController
 public class SalesApplication {
     @Bean
-    public CommandLineRunner init( @Autowired Customers customers ){
+    public CommandLineRunner init( @Autowired CustomersRepository customersRepository ){
         return args -> {
             System.out.println("Inserting new customers...");
-            customers.save(new Customer("Guilherme"));
-            customers.save(new Customer("Maria Carolina"));
+            customersRepository.save(new Customer("Guilherme"));
+            customersRepository.save(new Customer("Maria Carolina"));
 
-            List<Customer> allCustomers = customers.getAllCustomers();
+            List<Customer> allCustomers = customersRepository.getAllCustomers();
             allCustomers.forEach(System.out::println);
 
             System.out.println("Updating and getting all customers...");
             allCustomers.forEach(c -> {
-                c.setNome(c.getNome().concat(" test"));
-                customers.update(c);
+                c.setName(c.getName().concat(" test"));
+                customersRepository.update(c);
             });
 
-            allCustomers = customers.getAllCustomers();
+            allCustomers = customersRepository.getAllCustomers();
             allCustomers.forEach(System.out::println);
 
             System.out.println("Getting specific customer...");
-            customers.getCustomer("Carol").forEach(System.out::println);
+            customersRepository.getCustomer("Carol").forEach(System.out::println);
 
             System.out.println("Deleting specific customer...");
-            customers.getCustomer("lin").forEach(customers::delete);
+            customersRepository.getCustomer("lin").forEach(customersRepository::delete);
 
-            allCustomers = customers.getAllCustomers();
+            allCustomers = customersRepository.getAllCustomers();
             allCustomers.forEach(System.out::println);
 
 //            System.out.println("Deleting all customers...");
