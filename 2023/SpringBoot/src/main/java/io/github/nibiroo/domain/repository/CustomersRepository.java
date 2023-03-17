@@ -2,6 +2,7 @@ package io.github.nibiroo.domain.repository;
 
 import io.github.nibiroo.domain.entity.Customer;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,14 +16,6 @@ import java.util.List;
 @Repository
 public class CustomersRepository {
 
-    private static final String SELECT_ALL = "SELECT * FROM CUSTOMER ";
-    private static final String UPDATE = "UPDATE CUSTOMER SET name = ? WHERE id = ? ";
-    private static final String DELETE = "DELETE FROM CUSTOMER WHERE id = ? ";
-
-    // JdbcTemplate -> Will get information about database connection
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     // EntityManager -> Responsible for performing any entity operation in the database
     @Autowired
     private EntityManager entityManager;
@@ -33,37 +26,38 @@ public class CustomersRepository {
         return customer;
     }
 
+    @Transactional
     public Customer update (Customer customer){
-        jdbcTemplate.update(UPDATE, customer.getName(), customer.getId());
+        entityManager.merge(customer);
         return customer;
     }
 
+    @Transactional
     public void delete (Customer customer){
-        delete(customer.getId());
+        if(!entityManager.contains(customer)){
+            customer = entityManager.merge(customer);
+        }
+        entityManager.remove(customer);
     }
+
+    @Transactional
     public void delete (Integer id){
-        jdbcTemplate.update(DELETE, id);
+        Customer customer = entityManager.find(Customer.class, id);
+        delete(customer);
     }
 
+    @Transactional(readOnly = true)
     public List<Customer> getCustomer(String name){
-        return jdbcTemplate.query(
-                SELECT_ALL.concat(" where name like ?"),
-                new Object[]{"%"+name+"%"},
-                getCustomerRowMapper()
-        );
+        String jpql = "select c from Customer c where c.name like :name ";
+        TypedQuery<Customer> query = entityManager.createQuery(jpql, Customer.class);
+        query.setParameter("name", "%"+name+"%");
+        return query.getResultList();
     }
 
+    @Transactional(readOnly = true)
     public List<Customer> getAllCustomers(){
-        // How will we use more, create a method for getCustomerMapper with CTRL+ALT+M when code selected
-        return jdbcTemplate.query(SELECT_ALL, getCustomerRowMapper());
-    }
-
-    // RowMapper<Customer> -> For each row of result, bring the information and return a new Customer(for each data row)
-    private static RowMapper<Customer> getCustomerRowMapper() {
-        return (rs, rowNum) -> {
-            Integer idCustomer = rs.getInt("id");
-            String nameCustomer = rs.getString("name");
-            return new Customer(idCustomer, nameCustomer);
-        };
+        return entityManager
+                .createQuery("from Customer", Customer.class)
+                .getResultList();
     }
 }

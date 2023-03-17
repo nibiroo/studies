@@ -27,7 +27,7 @@ public class SalesApplication {
 
             List<Customer> allCustomers = customersRepository.getAllCustomers();
             allCustomers.forEach(System.out::println);
-
+            //
             System.out.println("Updating and getting all customers...");
             allCustomers.forEach(c -> {
                 c.setName(c.getName().concat(" test"));
@@ -36,24 +36,24 @@ public class SalesApplication {
 
             allCustomers = customersRepository.getAllCustomers();
             allCustomers.forEach(System.out::println);
-
+            //
             System.out.println("Getting specific customer...");
             customersRepository.getCustomer("Carol").forEach(System.out::println);
-
+            //
             System.out.println("Deleting specific customer...");
             customersRepository.getCustomer("lin").forEach(customersRepository::delete);
 
             allCustomers = customersRepository.getAllCustomers();
             allCustomers.forEach(System.out::println);
+            //
+            System.out.println("Deleting all customers...");
+            customersRepository.getAllCustomers().forEach(customersRepository::delete);
 
-//            System.out.println("Deleting all customers...");
-//            customers.getAllCustomers().forEach(c -> {
-//                customers.delete(c);
-//            });
-//            allCustomers = customers.getAllCustomers();
-//            if (allCustomers.isEmpty()){
-//                System.out.println("There are no customers records...");
-//            } else { allCustomers.forEach(System.out::println); }
+            allCustomers = customersRepository.getAllCustomers();
+            if (allCustomers.isEmpty()){
+                System.out.println("There are no customers records...");
+            } else { allCustomers.forEach(System.out::println); }
+            //
         };
     }
 
