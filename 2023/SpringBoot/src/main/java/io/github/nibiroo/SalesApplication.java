@@ -21,35 +21,46 @@ public class SalesApplication {
     @Bean
     public CommandLineRunner init( @Autowired CustomersRepository customersRepository ){
         return args -> {
+            System.out.println();
+            System.out.println();
+            //
             System.out.println("Inserting new customers...");
             customersRepository.save(new Customer("Guilherme"));
             customersRepository.save(new Customer("Maria Carolina"));
 
-            List<Customer> allCustomers = customersRepository.getAllCustomers();
+            List<Customer> allCustomers = customersRepository.findAll();
             allCustomers.forEach(System.out::println);
+            //
+            System.out.println("-----");
             //
             System.out.println("Updating and getting all customers...");
             allCustomers.forEach(c -> {
                 c.setName(c.getName().concat(" test"));
-                customersRepository.update(c);
+                customersRepository.save(c);
             });
 
-            allCustomers = customersRepository.getAllCustomers();
+            allCustomers = customersRepository.findAll();
             allCustomers.forEach(System.out::println);
+            //
+            System.out.println("-----");
             //
             System.out.println("Getting specific customer...");
-            customersRepository.getCustomer("Carol").forEach(System.out::println);
+            customersRepository.findByNameLike("Carol").forEach(System.out::println);
+            //
+            System.out.println("-----");
             //
             System.out.println("Deleting specific customer...");
-            customersRepository.getCustomer("lin").forEach(customersRepository::delete);
+            customersRepository.findByNameLike("lin").forEach(customersRepository::delete);
 
-            allCustomers = customersRepository.getAllCustomers();
+            allCustomers = customersRepository.findAll();
             allCustomers.forEach(System.out::println);
             //
+            System.out.println("-----");
+            //
             System.out.println("Deleting all customers...");
-            customersRepository.getAllCustomers().forEach(customersRepository::delete);
+            customersRepository.findAll().forEach(customersRepository::delete);
 
-            allCustomers = customersRepository.getAllCustomers();
+            allCustomers = customersRepository.findAll();
             if (allCustomers.isEmpty()){
                 System.out.println("There are no customers records...");
             } else { allCustomers.forEach(System.out::println); }
