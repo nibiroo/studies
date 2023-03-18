@@ -33,6 +33,11 @@ public class SalesApplication {
             //
             System.out.println("-----");
             //
+            Boolean exists = customersRepository.existsByName("Guilherme");
+            System.out.println("Exists customer with name 'Guilherme': "+exists);
+            //
+            System.out.println("-----");
+            //
             System.out.println("Updating and getting all customers...");
             allCustomers.forEach(c -> {
                 c.setName(c.getName().concat(" test"));
@@ -45,12 +50,14 @@ public class SalesApplication {
             System.out.println("-----");
             //
             System.out.println("Getting specific customer...");
-            customersRepository.findByNameLike("Carol").forEach(System.out::println);
+            customersRepository.findByNameContains("Carol").forEach(System.out::println);
             //
             System.out.println("-----");
             //
             System.out.println("Deleting specific customer...");
-            customersRepository.findByNameLike("lin").forEach(customersRepository::delete);
+            customersRepository.findByNameContains("lin").forEach(c -> {
+                customersRepository.delete(c);
+            });
 
             allCustomers = customersRepository.findAll();
             allCustomers.forEach(System.out::println);

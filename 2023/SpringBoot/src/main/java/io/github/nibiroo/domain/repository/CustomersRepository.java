@@ -7,5 +7,11 @@ import java.util.List;
 
 public interface CustomersRepository extends JpaRepository<Customer, Integer> {
 
-    List<Customer> findByNameLike(String name);
+    List<Customer> findByNameContains(String name);
+
+    List<Customer> findByNameOrId(String name, Integer id);
+
+    Customer findOneByName(String name);
+
+    Boolean existsByName(String name);
 }
