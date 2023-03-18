@@ -54,6 +54,21 @@ public class SalesApplication {
             //
             System.out.println("-----");
             //
+            System.out.println("Getting something customer by ID 2 in JQL...");
+            customersRepository.findSomethingIDJPQL(2).forEach(System.out::println);
+            //
+            System.out.println("-----");
+            //
+            System.out.println("Getting something customer by ID 2 in SQL...");
+            customersRepository.findSomethingIDSQL(2).forEach(System.out::println);
+            //
+            System.out.println("-----");
+            //
+            System.out.println("Getting something customer by name start with Guilh in SQL...");
+            customersRepository.findSomethingStartsNameSQL("Guilh").forEach(System.out::println);
+            //
+            System.out.println("-----");
+            //
             System.out.println("Deleting specific customer...");
             customersRepository.findByNameContains("lin").forEach(c -> {
                 customersRepository.delete(c);
