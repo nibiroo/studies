@@ -1,10 +1,22 @@
 package io.github.nibiroo.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "product")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "unitPrice")
     private BigDecimal unitPrice;
 
     public Integer getId() {
