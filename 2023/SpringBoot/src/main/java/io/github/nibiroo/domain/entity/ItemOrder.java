@@ -1,9 +1,24 @@
 package io.github.nibiroo.domain.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "itemOrder")
 public class ItemOrder {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
-    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "idInvoice")
+    private Invoice invoice;
+
+    @ManyToOne
+    @JoinColumn(name = "idProduct")
     private Product product;
+
     private Integer amount;
 
     public Integer getId() {
@@ -12,11 +27,11 @@ public class ItemOrder {
     public void setId(Integer id) {
         this.id = id;
     }
-    public Order getOrder() {
-        return order;
+    public Invoice getOrder() {
+        return invoice;
     }
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrder(Invoice invoice) {
+        this.invoice = invoice;
     }
     public Product getProduct() {
         return product;

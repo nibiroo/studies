@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "invoice")
+public class Invoice {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
 
@@ -24,11 +25,11 @@ public class Order {
     @Column(name = "total", length = 20, precision = 2)
     private BigDecimal total;
 
+    @OneToMany(mappedBy = "invoice")
+    private List<ItemOrder> itemOrders;
+
     public Integer getId() {
         return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
     }
     public Customer getClient() {
         return customer;
@@ -47,5 +48,8 @@ public class Order {
     }
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+    public List<ItemOrder> getItemOrders() {
+        return itemOrders;
     }
 }
