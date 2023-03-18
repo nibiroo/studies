@@ -1,6 +1,9 @@
 package io.github.nibiroo.domain.entity;
 
 import jakarta.persistence.*;
+import org.aspectj.weaver.ast.Or;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -13,6 +16,9 @@ public class Customer {
 
     @Column(name = "name", length = 100)
     private String name;
+
+    @OneToMany(mappedBy = "idCustomer")
+    private Set<Order> orders;
 
     public Customer() {
     }
@@ -33,6 +39,9 @@ public class Customer {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public Set<Order> getOrders() {
+        return orders;
     }
 
     @Override

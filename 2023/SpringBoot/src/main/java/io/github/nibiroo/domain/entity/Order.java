@@ -1,12 +1,27 @@
 package io.github.nibiroo.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "order")
 public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "idCustomer")
     private Customer customer;
+
+    @Column(name = "dateOrder")
     private LocalDate date;
+
+    @Column(name = "total", length = 20, precision = 2)
     private BigDecimal total;
 
     public Integer getId() {
