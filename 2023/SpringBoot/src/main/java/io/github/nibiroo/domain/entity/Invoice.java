@@ -26,7 +26,7 @@ public class Invoice {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "invoice")
-    private List<ItemOrder> itemOrders;
+    private List<ItemInvoice> itemInvoices;
 
     public Integer getId() {
         return id;
@@ -49,7 +49,7 @@ public class Invoice {
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-    public List<ItemOrder> getItemOrders() {
-        return itemOrders;
+    public List<ItemInvoice> getItemOrders() {
+        return itemInvoices;
     }
 }

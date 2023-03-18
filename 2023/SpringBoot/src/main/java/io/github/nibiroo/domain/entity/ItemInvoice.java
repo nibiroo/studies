@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "itemOrder")
-public class ItemOrder {
+public class ItemInvoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
