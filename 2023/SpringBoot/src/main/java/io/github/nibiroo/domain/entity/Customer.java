@@ -16,7 +16,7 @@ public class Customer {
     @Column(name = "name", length = 100)
     private String name;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Invoice> invoices;
 
     public Customer() {
@@ -39,7 +39,7 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     }
-    public Set<Invoice> getOrders() {
+    public Set<Invoice> getInvoices() {
         return invoices;
     }
 

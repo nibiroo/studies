@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface CustomersRepository extends JpaRepository<Customer, Integer> {
 
+    Customer findByName(String name);
+
     List<Customer> findByNameContains(String name);
 
     Boolean existsByName(String name);
@@ -26,4 +28,7 @@ public interface CustomersRepository extends JpaRepository<Customer, Integer> {
     @Modifying
     @Query(value = "delete from customer c where c.name = :nameParam", nativeQuery = true)
     void deleteByName (String name);
+
+    @Query(value = "select c.*, inv.date_order, inv.total from customer as c left join invoice as inv on c.id = inv.id_customer where c.id = :idParam ", nativeQuery = true)
+    Customer findCustomerFetchInvoices(@Param("idParam") Integer idParam);
 }

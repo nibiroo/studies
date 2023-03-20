@@ -17,8 +17,8 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "unitPrice")
-    private BigDecimal unitPrice;
+    @Column(name = "unit_price")
+    private BigDecimal unit_price;
 
     public Integer getId() {
         return id;
@@ -33,9 +33,9 @@ public class Product {
         this.description = description;
     }
     public BigDecimal getUnitPrice() {
-        return unitPrice;
+        return unit_price;
     }
     public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+        this.unit_price = unitPrice;
     }
 }

@@ -12,11 +12,11 @@ public class ItemInvoice {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "idInvoice")
+    @JoinColumn(name = "id_invoice")
     private Invoice invoice;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
+    @JoinColumn(name = "id_product")
     private Product product;
 
     private Integer amount;
