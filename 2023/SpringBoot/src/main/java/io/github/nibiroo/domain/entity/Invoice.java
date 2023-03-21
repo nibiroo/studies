@@ -60,10 +60,9 @@ public class Invoice {
     public String toString() {
         return "Invoice{" +
                 "id=" + id +
-                ", customer=" + customer +
+                ", customer=" + customer.getId() +
                 ", date=" + date +
                 ", total=" + total +
-                ", itemInvoices=" + itemInvoices +
                 '}';
     }
 }

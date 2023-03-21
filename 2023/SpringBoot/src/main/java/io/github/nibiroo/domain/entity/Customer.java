@@ -39,8 +39,12 @@ public class Customer {
     public void setName(String name) {
         this.name = name;
     }
+
     public Set<Invoice> getInvoices() {
         return invoices;
+    }
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     @Override

@@ -29,6 +29,6 @@ public interface CustomersRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "delete from customer c where c.name = :nameParam", nativeQuery = true)
     void deleteByName (String name);
 
-    @Query(value = "select c.*, inv.date_order, inv.total from customer as c left join invoice as inv on c.id = inv.id_customer where c.id = :idParam ", nativeQuery = true)
+    @Query(value = "select c from Customer c left join fetch c.invoices where c.id = :idParam")
     Customer findCustomerFetchInvoices(@Param("idParam") Integer idParam);
 }

@@ -51,6 +51,7 @@ public class SalesApplication {
             Customer customerTest = customersRepository.findCustomerFetchInvoices(customer.getId());
             System.out.println(customerTest);
             System.out.println(customerTest.getInvoices());
+            //invoiceRepository.findByCustomer(customer).forEach(System.out::println);
         };
     }
 
