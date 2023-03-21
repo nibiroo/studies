@@ -22,38 +22,6 @@ import java.util.List;
 @SpringBootApplication
 @RestController
 public class SalesApplication {
-    @Bean
-    public CommandLineRunner init(@Autowired CustomersRepository customersRepository, @Autowired InvoiceRepository invoiceRepository ){
-        return args -> {
-            System.out.println();
-            System.out.println();
-            //
-            System.out.println("Inserting new customers...");
-            Customer customer = new Customer("Guilherme");
-            customersRepository.save(customer);
-
-            List<Customer> allCustomers = customersRepository.findAll();
-            allCustomers.forEach(System.out::println);
-            //
-            System.out.println("-----");
-            //
-            System.out.println("Inserting new invoice...");
-            Invoice invoice = new Invoice();
-            invoice.setCustomer(customer);
-            invoice.setDate(LocalDate.now());
-            invoice.setTotal(BigDecimal.valueOf(100));
-
-            invoiceRepository.save(invoice);
-            //
-            System.out.println("-----");
-            //
-            System.out.println("Printing customer with invoice");
-            Customer customerTest = customersRepository.findCustomerFetchInvoices(customer.getId());
-            System.out.println(customerTest);
-            System.out.println(customerTest.getInvoices());
-            //invoiceRepository.findByCustomer(customer).forEach(System.out::println);
-        };
-    }
 
     // PSVM - Public Static Void Main, to create faster
     public static void main(String[] args) {
