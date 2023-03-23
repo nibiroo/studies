@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 //   SpringBootApplication: Means this Java class is an SpringBoot application
 //   RestController: Means the application can control and send messages to the browser
 @SpringBootApplication
-@RestController
 public class SalesApplication {
 
     // PSVM - Public Static Void Main, to create faster

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/customers")
 public class CustomerController {
 
-    @GetMapping("/hello/{name}")
+    @GetMapping(value = {"/hello/{name}", "/helloworld/{name}"})
     @ResponseBody
     public String HelloCustomer (@PathVariable("name") String nameCustomer) {
         return String.format("Hello %s", nameCustomer);
