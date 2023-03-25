@@ -34,16 +34,6 @@ public class CustomerController {
 
     }
 
-    @GetMapping(value = "/{id}", produces = "application/json")
-    public Customer getCustomerById (@PathVariable Long id) {
-
-        return customersRepository.findById(id)
-                                  .orElseThrow(()->{
-                                      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There aren't customer(s)!");
-                                  });
-
-    }
-
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public Customer saveCustomer (@RequestBody Customer customer) {
