@@ -13,7 +13,7 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_customer")
@@ -28,7 +28,7 @@ public class Invoice {
     @OneToMany(mappedBy = "invoice")
     private List<ItemInvoice> itemInvoices;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     public Customer getCustomer() {

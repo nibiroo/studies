@@ -11,10 +11,13 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", length = 100)
     private String name;
+
+    @Column(length = 11)
+    private String cpf;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Invoice> invoices;
@@ -24,13 +27,14 @@ public class Customer {
     public Customer(String nameCustomer){
         this.name = nameCustomer;
     }
-    public Customer(Integer idCustomer, String nameCustomer) {
+    public Customer(Long idCustomer, String nameCustomer, String cpf) {
         this.id = idCustomer;
         this.name = nameCustomer;
+        this.cpf = cpf;
     }
 
     // GETTERS & SETTERS - ALT + INS
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     public String getName() {
@@ -38,6 +42,12 @@ public class Customer {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public String getCpf() {
+        return cpf;
+    }
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Set<Invoice> getInvoices() {

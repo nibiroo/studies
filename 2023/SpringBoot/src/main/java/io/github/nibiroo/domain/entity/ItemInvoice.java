@@ -9,7 +9,7 @@ public class ItemInvoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_invoice")
@@ -19,9 +19,9 @@ public class ItemInvoice {
     @JoinColumn(name = "id_product")
     private Product product;
 
-    private Integer amount;
+    private Long amount;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     public Invoice getInvoice() {
@@ -36,10 +36,10 @@ public class ItemInvoice {
     public void setProduct(Product product) {
         this.product = product;
     }
-    public Integer getAmount() {
+    public Long getAmount() {
         return amount;
     }
-    public void setAmount(Integer amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 }

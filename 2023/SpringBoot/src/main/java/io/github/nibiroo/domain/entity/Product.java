@@ -12,7 +12,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "description")
     private String description;
@@ -20,7 +20,7 @@ public class Product {
     @Column(name = "unit_price")
     private BigDecimal unit_price;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     public String getDescription() {
