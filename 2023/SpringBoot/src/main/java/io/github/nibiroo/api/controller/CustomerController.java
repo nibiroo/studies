@@ -1,6 +1,5 @@
 package io.github.nibiroo.api.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.github.nibiroo.domain.entity.Customer;
 import io.github.nibiroo.domain.repository.CustomersRepository;
 import org.springframework.data.domain.Example;
@@ -8,6 +7,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class CustomerController {
     }
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Customer>> getAllCustomersFind(Customer filter) {
+    public List<Customer> getAllCustomersFind(Customer filter) {
 
         ExampleMatcher exampleMatcher = ExampleMatcher
                                             .matching()
@@ -30,56 +30,47 @@ public class CustomerController {
                                             .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example example = Example.of(filter, exampleMatcher);
 
-        List<Customer> customerList = customersRepository.findAll(example);
-
-        return ResponseEntity.ok(customerList);
+        return customersRepository.findAll(example);
 
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<Customer> getCustomerById (@PathVariable Long id) {
+    public Customer getCustomerById (@PathVariable Long id) {
 
-        Optional<Customer> optionalCustomer = customersRepository.findById(id);
+        return customersRepository.findById(id)
+                                  .orElseThrow(()->{
+                                      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There aren't customer(s)!");
+                                  });
 
-        if(optionalCustomer.isPresent()) {
-            return new ResponseEntity<>(optionalCustomer.get(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<Customer> saveCustomer (@RequestBody Customer customer) {
-        Customer customersaved = customersRepository.save(customer);
-        return new ResponseEntity<>(customersaved, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Customer saveCustomer (@RequestBody Customer customer) {
+        return customersRepository.save(customer);
     }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Customer> deleteCustomer (@PathVariable Long id) {
-
-        Optional<Customer> optionalCustomer = customersRepository.findById(id);
-
-        if (optionalCustomer.isPresent()) {
-            customersRepository.deleteById(id);
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomer (@PathVariable Long id) {
+        customersRepository.findById(id)
+                           .map( customer -> {
+                               customersRepository.delete(customer);
+                               return customer;
+                           })
+                           .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't customer with id " + id));
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json")
-    public ResponseEntity<Customer> putCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void putCustomer(@PathVariable Long id, @RequestBody Customer customer) {
 
-        Optional<Customer> optionalCustomer = customersRepository.findById(id);
-
-        if (optionalCustomer.isPresent()) {
-            Customer customerExist = optionalCustomer.get();
-            customerExist.setName(customer.getName());
-            customersRepository.save(customerExist);
-
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        customersRepository
+                .findById(id)
+                .map(custExist -> {
+                    custExist.setName(customer.getName());
+                    custExist.setCpf(customer.getCpf());
+                    customersRepository.save(custExist);
+                    return custExist;
+                }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't customer with id " + id));
     }
 }
