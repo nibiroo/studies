@@ -1,16 +1,14 @@
-package io.github.nibiroo.controller;
+package io.github.nibiroo.rest.controller;
 
 import io.github.nibiroo.domain.entity.Customer;
 import io.github.nibiroo.domain.repository.CustomersRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")

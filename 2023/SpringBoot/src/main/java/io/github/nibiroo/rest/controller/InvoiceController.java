@@ -1,7 +1,6 @@
-package io.github.nibiroo.controller;
+package io.github.nibiroo.rest.controller;
 
 import io.github.nibiroo.service.InvoiceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
