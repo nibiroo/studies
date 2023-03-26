@@ -1,10 +1,13 @@
 package io.github.nibiroo.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Set;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "product")
 public class Product {
@@ -19,21 +22,4 @@ public class Product {
 
     @Column(name = "unit_price")
     private BigDecimal unit_price;
-
-    public void setId(Long id) { this.id = id; }
-    public Long getId() {
-        return id;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public BigDecimal getUnitPrice() {
-        return unit_price;
-    }
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unit_price = unitPrice;
-    }
 }

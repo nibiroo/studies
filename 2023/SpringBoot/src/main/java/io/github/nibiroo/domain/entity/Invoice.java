@@ -1,11 +1,15 @@
 package io.github.nibiroo.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "invoice")
 public class Invoice {
@@ -27,43 +31,4 @@ public class Invoice {
 
     @OneToMany(mappedBy = "invoice")
     private List<ItemInvoice> itemInvoices;
-
-    public void setId(Long id) { this.id = id; }
-    public Long getId() {
-        return id;
-    }
-    public Customer getCustomer() {
-        return customer;
-    }
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-    public LocalDate getDate() {
-        return date;
-    }
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-    public BigDecimal getTotal() {
-        return total;
-    }
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-    public List<ItemInvoice> getItemInvoices() {
-        return itemInvoices;
-    }
-    public void setItemInvoices(List<ItemInvoice> itemInvoices) {
-        this.itemInvoices = itemInvoices;
-    }
-
-    @Override
-    public String toString() {
-        return "Invoice{" +
-                "id=" + id +
-                ", customer=" + customer.getId() +
-                ", date=" + date +
-                ", total=" + total +
-                '}';
-    }
 }
