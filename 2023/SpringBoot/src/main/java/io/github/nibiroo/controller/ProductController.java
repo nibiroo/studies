@@ -1,4 +1,4 @@
-package io.github.nibiroo.api.controller;
+package io.github.nibiroo.controller;
 
 import io.github.nibiroo.domain.entity.Product;
 import io.github.nibiroo.domain.repository.ProductRepository;
