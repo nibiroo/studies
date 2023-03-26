@@ -34,6 +34,7 @@ public class Customer {
     }
 
     // GETTERS & SETTERS - ALT + INS
+    public void setId(Long id) { this.id = id; }
     public Long getId() {
         return id;
     }

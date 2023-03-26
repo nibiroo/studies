@@ -21,6 +21,7 @@ public class ItemInvoice {
 
     private Long amount;
 
+    public void setId(Long id) { this.id = id; }
     public Long getId() {
         return id;
     }

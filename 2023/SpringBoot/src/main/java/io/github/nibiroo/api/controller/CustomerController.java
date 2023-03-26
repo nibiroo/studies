@@ -57,9 +57,8 @@ public class CustomerController {
         customersRepository
                 .findById(id)
                 .map(custExist -> {
-                    custExist.setName(customer.getName());
-                    custExist.setCpf(customer.getCpf());
-                    customersRepository.save(custExist);
+                    customer.setId(custExist.getId());
+                    customersRepository.save(customer);
                     return custExist;
                 }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't customer with id " + id));
     }
