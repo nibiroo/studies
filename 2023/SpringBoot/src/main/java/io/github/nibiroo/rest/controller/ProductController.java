@@ -46,7 +46,7 @@ public class ProductController {
                 .findById(id)
                 .map(prodExist -> {
                     prodExist.setDescription(product.getDescription());
-                    prodExist.setUnitPrice(product.getUnitPrice());
+                    prodExist.setUnit_price(product.getUnit_price());
                     productRepository.save(prodExist);
                     return prodExist;
                 }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't the product with id " + id));
