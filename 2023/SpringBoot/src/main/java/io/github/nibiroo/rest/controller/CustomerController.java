@@ -1,7 +1,7 @@
 package io.github.nibiroo.rest.controller;
 
 import io.github.nibiroo.domain.entity.Customer;
-import io.github.nibiroo.domain.repository.CustomersRepository;
+import io.github.nibiroo.domain.repository.CustomerRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -13,10 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
-    private final CustomersRepository customersRepository;
+    private final CustomerRepository customerRepository;
 
-    public CustomerController(CustomersRepository customersRepository) {
-        this.customersRepository = customersRepository;
+    public CustomerController(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping(produces = "application/json")
@@ -28,21 +28,21 @@ public class CustomerController {
                                             .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example example = Example.of(filter, exampleMatcher);
 
-        return customersRepository.findAll(example);
+        return customerRepository.findAll(example);
 
     }
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public Customer saveCustomer (@RequestBody Customer customer) {
-        return customersRepository.save(customer);
+        return customerRepository.save(customer);
     }
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer (@PathVariable Long id) {
-        customersRepository.findById(id)
+        customerRepository.findById(id)
                            .map( customer -> {
-                               customersRepository.delete(customer);
+                               customerRepository.delete(customer);
                                return customer;
                            })
                            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't customer with id " + id));
@@ -52,11 +52,11 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void putCustomer(@PathVariable Long id, @RequestBody Customer customer) {
 
-        customersRepository
+        customerRepository
                 .findById(id)
                 .map(custExist -> {
                     customer.setId(custExist.getId());
-                    customersRepository.save(customer);
+                    customerRepository.save(customer);
                     return custExist;
                 }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't customer with id " + id));
     }
