@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class InvoiceDTO {
 
-    private Long customer;
+    private Long idCustomer;
     private BigDecimal total;
     private List<ItemInvoicesDTO> itemsInvoices;
 }

@@ -7,6 +7,6 @@ import lombok.*;
 @Data
 public class ItemInvoicesDTO {
 
-    private Long product;
+    private Long idProduct;
     private Long amount;
 }

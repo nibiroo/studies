@@ -34,7 +34,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Transactional
     public Invoice save(InvoiceDTO invoiceDTO) {
 
-        Long idCustomer = invoiceDTO.getCustomer();
+        Long idCustomer = invoiceDTO.getIdCustomer();
 
         Customer customer = customerRepository
                 .findById(idCustomer)
@@ -66,7 +66,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return itemInvoicesDTOList
                 .stream()
                 .map(itemInvoicesDTO-> {
-                    Product product = productRepository.findById(invoice.getId())
+                    Product product = productRepository.findById(itemInvoicesDTO.getIdProduct())
                                                         .orElseThrow(()-> new BusinessRoleException("There isn't product with id " + invoice.getId()));
 
                     ItemInvoice itemInvoice = new ItemInvoice();
