@@ -26,5 +26,5 @@ public class Customer {
     private String cpf;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private Set<Invoice> invoices;
+    private Set<Order> orders;
 }

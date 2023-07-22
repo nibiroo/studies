@@ -8,9 +8,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class InvoiceDTO {
+public class OrderDTO {
 
     private Long idCustomer;
     private BigDecimal total;
-    private List<ItemInvoicesDTO> itemsInvoices;
+    private List<ItemOrdersDTO> itemsOrders;
 }

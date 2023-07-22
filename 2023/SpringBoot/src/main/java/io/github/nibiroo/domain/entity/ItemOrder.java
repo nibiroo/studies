@@ -8,7 +8,7 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "itemOrder")
-public class ItemInvoice {
+public class ItemOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,8 +16,8 @@ public class ItemInvoice {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_invoice")
-    private Invoice invoice;
+    @JoinColumn(name = "id_order")
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "id_product")

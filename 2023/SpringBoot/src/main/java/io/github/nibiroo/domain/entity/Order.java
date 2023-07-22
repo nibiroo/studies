@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "invoice")
-public class Invoice {
+@Table(name = "order")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,6 +29,8 @@ public class Invoice {
     @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "invoice")
-    private List<ItemInvoice> itemInvoices;
+    private StatusOrder statusOrder;
+
+    @OneToMany(mappedBy = "order")
+    private List<ItemOrder> itemOrder;
 }
