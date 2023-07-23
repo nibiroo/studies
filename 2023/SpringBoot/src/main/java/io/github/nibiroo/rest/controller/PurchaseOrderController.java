@@ -51,6 +51,7 @@ public class PurchaseOrderController {
                 .cpf(purchaseOrder.getCustomer().getCpf())
                 .nameCustomer(purchaseOrder.getCustomer().getName())
                 .total(purchaseOrder.getTotal())
+                .status(purchaseOrder.getStatusPurchaseOrder().name())
                 .itemPurchaseOrderInformationDTOList(convert(purchaseOrder.getItemPurchaseOrder()))
                 .build();
     }

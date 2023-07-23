@@ -18,5 +18,6 @@ public class PurchaseOrderInformationDTO {
     private String nameCustomer;
     private BigDecimal total;
     private String purchaseOrderDate;
+    private String status;
     private List<ItemPurchaseOrderInformationDTO> itemPurchaseOrderInformationDTOList;
 }
