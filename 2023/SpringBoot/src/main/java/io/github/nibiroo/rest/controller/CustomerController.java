@@ -34,12 +34,12 @@ public class CustomerController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer saveCustomer (@RequestBody Customer customer) {
+    public Customer save (@RequestBody Customer customer) {
         return customerRepository.save(customer);
     }
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCustomer (@PathVariable Long id) {
+    public void delete (@PathVariable Long id) {
         customerRepository.findById(id)
                            .map( customer -> {
                                customerRepository.delete(customer);
@@ -50,7 +50,7 @@ public class CustomerController {
 
     @PutMapping(value = "/{id}", consumes = "application/json")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+    public void put(@PathVariable Long id, @RequestBody Customer customer) {
 
         customerRepository
                 .findById(id)

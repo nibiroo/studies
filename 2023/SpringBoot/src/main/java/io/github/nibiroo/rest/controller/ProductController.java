@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-
     private final ProductRepository productRepository;
 
     public ProductController(ProductRepository productRepository) {
@@ -46,7 +45,7 @@ public class ProductController {
                 .findById(id)
                 .map(prodExist -> {
                     prodExist.setDescription(product.getDescription());
-                    prodExist.setUnit_price(product.getUnit_price());
+                    prodExist.setUnitPrice(product.getUnitPrice());
                     productRepository.save(prodExist);
                     return prodExist;
                 }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't the product with id " + id));

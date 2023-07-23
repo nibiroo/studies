@@ -8,9 +8,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class OrderDTO {
-
+public class PurchaseOrderDTO {
     private Long idCustomer;
     private BigDecimal total;
-    private List<ItemOrdersDTO> itemsOrders;
+    private List<ItemPurchaseOrdersDTO> itemPurchaseOrders;
 }

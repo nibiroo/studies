@@ -5,8 +5,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ItemOrdersDTO {
-
+public class ItemPurchaseOrdersDTO {
     private Long idProduct;
     private Long amount;
 }

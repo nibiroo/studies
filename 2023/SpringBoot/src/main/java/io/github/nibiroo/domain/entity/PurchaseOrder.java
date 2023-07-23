@@ -1,5 +1,6 @@
 package io.github.nibiroo.domain.entity;
 
+import io.github.nibiroo.domain.enums.StatusPurchaseOrder;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,9 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "order")
-public class Order {
-
+@Table(name = "purchase_order")
+public class PurchaseOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -23,14 +23,16 @@ public class Order {
     @JoinColumn(name = "id_customer")
     private Customer customer;
 
-    @Column(name = "date_order")
+    @Column(name = "date_purchase_order")
     private LocalDate date;
 
     @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
-    private StatusOrder statusOrder;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusPurchaseOrder statusPurchaseOrder;
 
-    @OneToMany(mappedBy = "order")
-    private List<ItemOrder> itemOrder;
+    @OneToMany(mappedBy = "purchaseOrder")
+    private List<ItemPurchaseOrder> itemPurchaseOrder;
 }
