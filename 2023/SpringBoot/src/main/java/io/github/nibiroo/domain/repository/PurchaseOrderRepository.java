@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Long> {
     List<PurchaseOrder> findByCustomer(Customer customer);
 
-    @Query(value = "select po.* from purchase_order po left join fetch po.itemPurchaseOrder where po.id = :id", nativeQuery = true)
+    @Query(value = "select po.* from purchase_order po left join item_purchase_order ipo on po.id = ipo.id_purchase_order where po.id = :id", nativeQuery = true)
     Optional<PurchaseOrder> findByIdFetchItemPurchaseOrder(@Param("id") Long id);
 }
