@@ -1,6 +1,8 @@
 package io.github.nibiroo.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,8 +19,10 @@ public class Product {
     private Long id;
 
     @Column(name = "description")
+    @NotEmpty(message = "{field.description.required}")
     private String description;
 
     @Column(name = "unit_price")
+    @NotNull(message = "{field.price.required}")
     private BigDecimal unitPrice;
 }

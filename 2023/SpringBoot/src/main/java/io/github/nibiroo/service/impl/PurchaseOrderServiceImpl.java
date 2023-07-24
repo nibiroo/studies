@@ -4,12 +4,13 @@ import io.github.nibiroo.domain.entity.Customer;
 import io.github.nibiroo.domain.entity.ItemPurchaseOrder;
 import io.github.nibiroo.domain.entity.Product;
 import io.github.nibiroo.domain.entity.PurchaseOrder;
-import io.github.nibiroo.domain.enums.StatusPurchaseOrder;
+import io.github.nibiroo.domain.enums.PurchaseOrderStatus;
 import io.github.nibiroo.domain.repository.CustomerRepository;
 import io.github.nibiroo.domain.repository.PurchaseOrderRepository;
 import io.github.nibiroo.domain.repository.ItemPurchaseOrderRepository;
 import io.github.nibiroo.domain.repository.ProductRepository;
 import io.github.nibiroo.exception.BusinessRoleException;
+import io.github.nibiroo.exception.PurchaseOrderNotFoundException;
 import io.github.nibiroo.rest.dto.ItemPurchaseOrdersDTO;
 import io.github.nibiroo.rest.dto.PurchaseOrderDTO;
 import io.github.nibiroo.service.PurchaseOrderService;
@@ -45,7 +46,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         purchaseOrder.setTotal(purchaseOrderDTO.getTotal());
         purchaseOrder.setDate(LocalDate.now(ZoneId.of("UTC")));
         purchaseOrder.setCustomer(customer);
-        purchaseOrder.setStatusPurchaseOrder(StatusPurchaseOrder.PLACED);
+        purchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatus.PLACED);
 
         List<ItemPurchaseOrder> itemOrderList = convertItemsOrder(purchaseOrder, purchaseOrderDTO.getItemPurchaseOrders());
         purchaseOrderRepository.save(purchaseOrder);
@@ -56,13 +57,18 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     }
 
     @Override
-    public List<PurchaseOrderDTO> getAllPurchaseOrdersFind(PurchaseOrderDTO filter) {
-        return null;
+    public Optional<PurchaseOrder> getPurchaseOrderComplete(Long id) {
+        return purchaseOrderRepository.findByIdFetchItemPurchaseOrder(id);
     }
 
     @Override
-    public Optional<PurchaseOrder> getPurchaseOrderComplete(Long id) {
-        return purchaseOrderRepository.findByIdFetchItemPurchaseOrder(id);
+    @Transactional
+    public void updateStatus(Long id, PurchaseOrderStatus purchaseOrderStatus) {
+        purchaseOrderRepository.findById(id)
+                                .map(it -> {
+                                    it.setPurchaseOrderStatus(purchaseOrderStatus);
+                                    return purchaseOrderRepository.save(it);
+                                }).orElseThrow(PurchaseOrderNotFoundException::new);
     }
 
     public List<ItemPurchaseOrder> convertItemsOrder(PurchaseOrder purchaseOrder, List<ItemPurchaseOrdersDTO> itemPurchaseOrdersDTOS) {

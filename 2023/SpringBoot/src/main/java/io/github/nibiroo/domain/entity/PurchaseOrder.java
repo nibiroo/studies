@@ -1,6 +1,7 @@
 package io.github.nibiroo.domain.entity;
 
-import io.github.nibiroo.domain.enums.StatusPurchaseOrder;
+import io.github.nibiroo.domain.enums.PurchaseOrderStatus;
+import io.github.nibiroo.validation.NotEmptyList;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,7 +32,7 @@ public class PurchaseOrder {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private StatusPurchaseOrder statusPurchaseOrder;
+    private PurchaseOrderStatus purchaseOrderStatus;
 
     @OneToMany(mappedBy = "purchaseOrder")
     private List<ItemPurchaseOrder> itemPurchaseOrder;

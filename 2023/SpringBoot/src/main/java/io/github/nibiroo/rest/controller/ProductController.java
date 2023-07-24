@@ -2,6 +2,7 @@ package io.github.nibiroo.rest.controller;
 
 import io.github.nibiroo.domain.entity.Product;
 import io.github.nibiroo.domain.repository.ProductRepository;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -33,13 +34,13 @@ public class ProductController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Product saveProduct (@RequestBody Product product) {
+    public Product saveProduct (@RequestBody @Valid Product product) {
         return productRepository.save(product);
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putProduct (@PathVariable Long id, @RequestBody Product product) {
+    public void putProduct (@PathVariable Long id, @RequestBody @Valid Product product) {
 
         productRepository
                 .findById(id)

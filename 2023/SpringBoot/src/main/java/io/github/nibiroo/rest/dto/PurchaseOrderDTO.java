@@ -1,5 +1,7 @@
 package io.github.nibiroo.rest.dto;
 
+import io.github.nibiroo.validation.NotEmptyList;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -9,7 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class PurchaseOrderDTO {
+    @NotNull(message = "{field.code-customer.required}")
     private Long idCustomer;
+    @NotNull(message = "{field.total-purchase-order.required}")
     private BigDecimal total;
+    @NotEmptyList(message = "{field.items-purchase-order.required}")
     private List<ItemPurchaseOrdersDTO> itemPurchaseOrders;
 }

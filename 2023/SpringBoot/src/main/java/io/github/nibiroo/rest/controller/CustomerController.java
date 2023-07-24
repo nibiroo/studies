@@ -2,6 +2,7 @@ package io.github.nibiroo.rest.controller;
 
 import io.github.nibiroo.domain.entity.Customer;
 import io.github.nibiroo.domain.repository.CustomerRepository;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -34,9 +35,10 @@ public class CustomerController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer save (@RequestBody Customer customer) {
+    public Customer save (@RequestBody @Valid Customer customer) {
         return customerRepository.save(customer);
     }
+
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete (@PathVariable Long id) {
@@ -50,7 +52,7 @@ public class CustomerController {
 
     @PutMapping(value = "/{id}", consumes = "application/json")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void put(@PathVariable Long id, @RequestBody Customer customer) {
+    public void put(@PathVariable Long id, @RequestBody @Valid Customer customer) {
 
         customerRepository
                 .findById(id)
