@@ -30,9 +30,10 @@ public class SecurityConfig {
                         authorizeConfig -> {
                             authorizeConfig.requestMatchers("/logout").permitAll();
 
-                            authorizeConfig.requestMatchers("/api/products/**").hasRole("USER");
-                            authorizeConfig.requestMatchers("/api/customers/**").hasRole("USER");
-                            authorizeConfig.requestMatchers("/api/purchase-order/**").hasRole("USER");
+                            authorizeConfig.requestMatchers("/api/products/**").hasRole("ADMIN");
+                            
+                            authorizeConfig.requestMatchers("/api/customers/**").hasAnyRole("USER", "ADMIN");
+                            authorizeConfig.requestMatchers("/api/purchase-order/**").hasAnyRole("USER", "ADMIN");
 
                             authorizeConfig.anyRequest().authenticated();
                         }
