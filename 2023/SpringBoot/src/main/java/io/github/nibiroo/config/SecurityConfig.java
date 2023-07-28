@@ -1,8 +1,9 @@
 package io.github.nibiroo.config;
 
-import io.github.nibiroo.service.impl.UserServiceImpl;
+import io.github.nibiroo.service.impl.AuthenticationUserLoginServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,7 +23,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
-                                                       UserServiceImpl userDetailsService) throws Exception {
+                                                       AuthenticationUserLoginServiceImpl userDetailsService) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                     .userDetailsService(userDetailsService)
                     .passwordEncoder(passwordEncoder())
@@ -37,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeConfig -> {
                             authorizeConfig.requestMatchers("/logout").permitAll();
+                            authorizeConfig.requestMatchers(HttpMethod.POST, "/api/users/").permitAll();
 
                             authorizeConfig.requestMatchers("/api/products/**").hasRole("ADMIN");
 
