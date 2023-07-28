@@ -1,25 +1,33 @@
 package io.github.nibiroo.config;
 
+import io.github.nibiroo.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http,
+                                                       UserServiceImpl userDetailsService) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                    .userDetailsService(userDetailsService)
+                    .passwordEncoder(passwordEncoder())
+                    .and()
+                    .build();
     }
 
     @Bean
@@ -41,20 +49,10 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User.builder()
-                                            .username("nibiro")
-                                            .password(passwordEncoder().encode("123"))
-                                            .roles("USER")
-                                            .build();
-        UserDetails admin = User.builder()
-                                        .username("admin")
-                                        .password(passwordEncoder().encode("admin"))
-                                        .roles("ADMIN")
-                                        .build();
-
-        return new InMemoryUserDetailsManager(userDetails, admin);
-    }
 }
+
+/*
+* Referências:
+*               https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter/
+*               https://www.dio.me/articles/spring-security-6-o-que-temos-de-novo
+* */
