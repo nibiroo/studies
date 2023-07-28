@@ -1,6 +1,8 @@
 package io.github.nibiroo;
 
 import io.github.nibiroo.domain.entity.AuthenticationUser;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,5 +34,29 @@ public class JwtService {
                 .setExpiration(date)
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
+    }
+
+    private Claims getClaims(String token) throws ExpiredJwtException {
+        return Jwts
+                .parser()
+                .setSigningKey(key)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public boolean isValidToken(String token) {
+        try {
+            Claims claims = getClaims(token);
+            Date dateExpiration = claims.getExpiration();
+            LocalDateTime localDateTime = dateExpiration.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+            return !LocalDateTime.now().isAfter(localDateTime);
+        }catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public String getLoginUser(String token) throws ExpiredJwtException {
+        return (String) getClaims(token).getSubject();
     }
 }
