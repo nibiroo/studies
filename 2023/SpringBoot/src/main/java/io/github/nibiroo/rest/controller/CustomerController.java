@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping({"/api/customers", "/api/customers/"})
 public class CustomerController {
     private final CustomerRepository customerRepository;
 
@@ -20,9 +20,8 @@ public class CustomerController {
         this.customerRepository = customerRepository;
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping
     public List<Customer> getAllCustomersFind(Customer filter) {
-
         ExampleMatcher exampleMatcher = ExampleMatcher
                                             .matching()
                                             .withIgnoreCase()
@@ -33,13 +32,13 @@ public class CustomerController {
 
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Customer save (@RequestBody @Valid Customer customer) {
         return customerRepository.save(customer);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping({"/{id}","{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete (@PathVariable Long id) {
         customerRepository.findById(id)
@@ -50,7 +49,7 @@ public class CustomerController {
                            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't customer with id " + id));
     }
 
-    @PutMapping(value = "/{id}", consumes = "application/json")
+    @PutMapping({"/{id}","{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void put(@PathVariable Long id, @RequestBody @Valid Customer customer) {
 

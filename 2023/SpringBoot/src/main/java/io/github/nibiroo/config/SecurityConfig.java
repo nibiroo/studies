@@ -25,10 +25,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf().disable()
                 .authorizeHttpRequests(
                         authorizeConfig -> {
-                            authorizeConfig.requestMatchers("/public").permitAll();
                             authorizeConfig.requestMatchers("/logout").permitAll();
+
+                            authorizeConfig.requestMatchers("/api/products/**").hasRole("USER");
+                            authorizeConfig.requestMatchers("/api/customers/**").hasRole("USER");
+                            authorizeConfig.requestMatchers("/api/purchase-order/**").hasRole("USER");
+
                             authorizeConfig.anyRequest().authenticated();
                         }
                 )

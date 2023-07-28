@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping({"/api/products", "/api/products/"})
 public class ProductController {
     private final ProductRepository productRepository;
 
@@ -21,7 +21,7 @@ public class ProductController {
     }
 
 
-    @GetMapping(produces = "application/json")
+    @GetMapping
     public List<Product> getAllProductsFind(Product filter) {
 
         ExampleMatcher exampleMatcher = ExampleMatcher
@@ -32,13 +32,13 @@ public class ProductController {
         return productRepository.findAll(example);
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Product saveProduct (@RequestBody @Valid Product product) {
         return productRepository.save(product);
     }
 
-    @PutMapping(value = "/{id}", consumes = "application/json")
+    @PutMapping({"/{id}","{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void putProduct (@PathVariable Long id, @RequestBody @Valid Product product) {
 
@@ -52,7 +52,7 @@ public class ProductController {
                 }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "There isn't the product with id " + id));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping({"/{id}","{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id) {
 
