@@ -31,14 +31,14 @@ public class SecurityConfig {
                             authorizeConfig.requestMatchers("/logout").permitAll();
 
                             authorizeConfig.requestMatchers("/api/products/**").hasRole("ADMIN");
-                            
+
                             authorizeConfig.requestMatchers("/api/customers/**").hasAnyRole("USER", "ADMIN");
                             authorizeConfig.requestMatchers("/api/purchase-order/**").hasAnyRole("USER", "ADMIN");
 
                             authorizeConfig.anyRequest().authenticated();
                         }
                 )
-                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 
