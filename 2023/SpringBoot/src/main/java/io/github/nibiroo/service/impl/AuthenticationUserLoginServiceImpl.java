@@ -2,6 +2,7 @@ package io.github.nibiroo.service.impl;
 
 import io.github.nibiroo.domain.entity.AuthenticationUser;
 import io.github.nibiroo.domain.repository.AuthenticationUserRepository;
+import io.github.nibiroo.exception.InvalidPasswordException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class AuthenticationUserLoginServiceImpl implements UserDetailsService {
+public class    AuthenticationUserLoginServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
     private AuthenticationUserRepository authenticationUserRepository;
 
@@ -23,6 +24,16 @@ public class AuthenticationUserLoginServiceImpl implements UserDetailsService {
     @Transactional
     public AuthenticationUser save(AuthenticationUser user) {
         return authenticationUserRepository.save(user);
+    }
+
+    public UserDetails authenticate(AuthenticationUser authenticationUser) {
+        UserDetails userDetails = loadUserByUsername(authenticationUser.getLogin());
+        boolean isPasswordCorrect = encoder.matches(authenticationUser.getPassword(), userDetails.getPassword());
+
+        if (isPasswordCorrect) {
+            return userDetails;
+        }
+        throw new InvalidPasswordException();
     }
 
     @Override
