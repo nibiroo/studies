@@ -80,6 +80,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ... other dependency ... -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+
         <!-- project jwt -->
         <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
         <dependency>

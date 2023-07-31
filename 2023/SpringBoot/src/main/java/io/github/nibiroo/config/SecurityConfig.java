@@ -1,5 +1,6 @@
 package io.github.nibiroo.config;
 
+import io.github.nibiroo.domain.enums.UserRole;
 import io.github.nibiroo.security.jwt.JwtAuthFilter;
 import io.github.nibiroo.security.jwt.JwtService;
 import org.springframework.context.annotation.Bean;
@@ -32,8 +33,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttp -> {
-                    authorizeHttp.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-                    authorizeHttp.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
+                    authorizeHttp.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll();
+
+                    authorizeHttp.requestMatchers("/api/customers/**").hasRole(String.valueOf(UserRole.USER));
+                    authorizeHttp.requestMatchers("/api/customers/**").hasRole(String.valueOf(UserRole.ADMIN));
 
                     authorizeHttp.anyRequest().authenticated();
                 })
