@@ -1,12 +1,13 @@
 package io.github.nibiroo.rest.dto;
 
-import lombok.Builder;
+import io.github.nibiroo.domain.enums.UserRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CredentialsDTO {
+public class CredentialsRegisterDTO {
     private String login;
     private String password;
+    private UserRole role;
 }

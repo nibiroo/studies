@@ -1,6 +1,6 @@
 package io.github.nibiroo.security.jwt;
 
-import io.github.nibiroo.domain.entity.AuthenticationUser;
+import io.github.nibiroo.domain.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -20,7 +20,7 @@ public class JwtService {
     @Value("${security.jwt.key}")
     private String key;
 
-    public String generateToken(AuthenticationUser user) {
+    public String generateToken(User user) {
         long expString = Long.valueOf(expiration);
         LocalDateTime dateHourExpiration = LocalDateTime.now().plusMinutes(expString);
         Instant instant = dateHourExpiration.atZone(ZoneId.systemDefault()).toInstant();
