@@ -2,7 +2,9 @@ package io.github.nibiroo.rest.dto;
 
 import io.github.nibiroo.validation.NotEmptyList;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -20,7 +20,6 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-
     @GetMapping
     public List<Product> getAllProductsFind(Product filter) {
 

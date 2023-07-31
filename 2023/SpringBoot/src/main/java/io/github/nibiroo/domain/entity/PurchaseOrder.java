@@ -1,9 +1,10 @@
 package io.github.nibiroo.domain.entity;
 
 import io.github.nibiroo.domain.enums.PurchaseOrderStatus;
-import io.github.nibiroo.validation.NotEmptyList;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
