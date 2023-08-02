@@ -8,6 +8,9 @@ import io.github.nibiroo.rest.dto.PurchaseOrderDTO;
 import io.github.nibiroo.rest.dto.PurchaseOrderInformationDTO;
 import io.github.nibiroo.rest.dto.UpdatePurchaseOrderStatus;
 import io.github.nibiroo.service.PurchaseOrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
@@ -30,6 +33,7 @@ public class PurchaseOrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+
     public Long save(@RequestBody @Valid PurchaseOrderDTO purchaseOrderDTO) {
 
         PurchaseOrder purchaseOrder = purchaseOrderService.save(purchaseOrderDTO);
@@ -37,6 +41,13 @@ public class PurchaseOrderController {
     }
 
     @GetMapping({"/{id}","{id}"})
+    @Operation(
+            summary = "List purchase order by id",
+            description = "List purchase order by id",
+            tags = { "Purchase Order", "GET" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "404")})
     public PurchaseOrderInformationDTO getById(@PathVariable Long id) {
         return purchaseOrderService
                 .getPurchaseOrderComplete(id)
@@ -46,6 +57,13 @@ public class PurchaseOrderController {
 
     @PatchMapping({"/{id}","{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(
+            summary = "Update(Patch) purchase order by id",
+            description = "Update(Patch) purchase order by id",
+            tags = { "Purchase Order", "PATCH" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "404")})
     public void updateStatus(@RequestBody @Valid UpdatePurchaseOrderStatus updatePurchaseOrderStatusDTO, @PathVariable Long id) {
         String newStatus = updatePurchaseOrderStatusDTO.getNewStatus();
         purchaseOrderService.updateStatus(id, PurchaseOrderStatus.valueOf(newStatus));

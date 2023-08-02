@@ -1,5 +1,6 @@
 package io.github.nibiroo.security.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.nibiroo.domain.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,6 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        System.out.println("DEBUG - Passou pelo doFilterInternal - JwtAuthFilter");
         filterChain.doFilter(request, response);
     }
 

@@ -1,7 +1,13 @@
 package io.github.nibiroo.rest.controller;
 
+import io.github.nibiroo.domain.entity.Customer;
 import io.github.nibiroo.domain.entity.Product;
 import io.github.nibiroo.domain.repository.ProductRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -21,6 +27,12 @@ public class ProductController {
     }
 
     @GetMapping
+    @Operation(
+            summary = "List all products",
+            description = "List all products, can to use Filter",
+            tags = { "Product", "GET" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") })})
     public List<Product> getAllProductsFind(Product filter) {
 
         ExampleMatcher exampleMatcher = ExampleMatcher
@@ -33,12 +45,25 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(
+            summary = "Register a new product",
+            description = "Register a new product",
+            tags = { "Product", "POST" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = { @Content(schema = @Schema(implementation = Customer.class), mediaType = "application/json") })})
     public Product saveProduct (@RequestBody @Valid Product product) {
         return productRepository.save(product);
     }
 
     @PutMapping({"/{id}","{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(
+            summary = "Update product by id",
+            description = "Update product by id",
+            tags = { "Product", "PUT" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "404")})
     public void putProduct (@PathVariable Long id, @RequestBody @Valid Product product) {
 
         productRepository
@@ -53,6 +78,13 @@ public class ProductController {
 
     @DeleteMapping({"/{id}","{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(
+            summary = "Delete product by id",
+            description = "Delete product by id",
+            tags = { "Product", "DELETE" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "404")})
     public void deleteProduct(@PathVariable Long id) {
 
         productRepository

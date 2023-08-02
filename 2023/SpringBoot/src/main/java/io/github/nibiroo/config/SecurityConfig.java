@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,19 +27,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorizeHttp -> {
-                    authorizeHttp.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll();
+        httpSecurity.csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/auth/**",
+                        "/v2/api-docs",
+                        "/v3/api-docs",
+                        "/v3/api-docs/**",
+                        "/swagger-resources",
+                        "/swagger-resources/**",
+                        "/configuration/ui",
+                        "/configuration/security",
+                        "/swagger-ui/**",
+                        "/webjars/**",
+                        "/swagger-ui.html").permitAll()
+                .anyRequest().permitAll().and().cors();
 
-                    authorizeHttp.requestMatchers("/api/customers/**").hasRole(String.valueOf(UserRole.USER));
-                    authorizeHttp.requestMatchers("/api/customers/**").hasRole(String.valueOf(UserRole.ADMIN));
+        httpSecurity.addFilterBefore(new JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
-                    authorizeHttp.anyRequest().authenticated();
-                })
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+        return httpSecurity.build();
     }
 
     @Bean
