@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping({"/api/purchase-order", "/api/purchase-order/"})
+@RequestMapping("/api/purchase-order")
 public class PurchaseOrderController {
     private PurchaseOrderService purchaseOrderService;
 
@@ -36,7 +36,7 @@ public class PurchaseOrderController {
         return purchaseOrder.getId();
     }
 
-    @GetMapping({"/{id}","{id}"})
+    @GetMapping("/{id}")
     public PurchaseOrderInformationDTO getById(@PathVariable Long id) {
         return purchaseOrderService
                 .getPurchaseOrderComplete(id)
@@ -44,7 +44,7 @@ public class PurchaseOrderController {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Purchase order not found with id " + id));
     }
 
-    @PatchMapping({"/{id}","{id}"})
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStatus(@RequestBody @Valid UpdatePurchaseOrderStatus updatePurchaseOrderStatusDTO, @PathVariable Long id) {
         String newStatus = updatePurchaseOrderStatusDTO.getNewStatus();

@@ -2,6 +2,8 @@ package io.github.nibiroo.config;
 
 import io.github.nibiroo.domain.enums.UserRole;
 import io.github.nibiroo.security.jwt.JwtAuthFilter;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     private JwtAuthFilter jwtAuthFilter;
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
@@ -26,8 +29,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(csrf -> csrf.disable())
+        httpSecurity
+                .csrf()
+                .disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttp -> {
                     authorizeHttp.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll();
@@ -35,10 +39,13 @@ public class SecurityConfig {
                     authorizeHttp.requestMatchers("/api/customers/**").hasRole(String.valueOf(UserRole.USER));
                     authorizeHttp.requestMatchers("/api/customers/**").hasRole(String.valueOf(UserRole.ADMIN));
 
+                    authorizeHttp.requestMatchers("/api/products/**").permitAll();
+                    authorizeHttp.requestMatchers("/swagger-ui.html", "/swagger-ui/*", "/v3/api-docs/**", "/v3/api-docs*").permitAll();
                     authorizeHttp.anyRequest().authenticated();
-                })
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                });
+
+        httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        return httpSecurity.build();
     }
 
     @Bean
